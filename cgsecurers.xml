@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.0" type="plugin" group="system" method="upgrade">
+	<name>CG_RSFORM</name>
+	<author>ConseilGouz</author>
+	<creationDate>2025-04-16</creationDate>
+	<copyright>(C)2025 ConseilGouz. All rights reserved.</copyright>
+	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
+	<authorUrl>www.conseilgouz.com</authorUrl>
+	<version>2.0.0</version>
+	<description>CG_RSFORM_XML_DESCRIPTION</description>
+	<namespace path="src">Conseilgouz\Plugin\System\Cgsecurers</namespace>
+	<scriptfile>script.php</scriptfile>
+	<files>
+		<folder plugin="cgsecurers">services</folder>
+		<folder>src</folder>
+		<filename>index.html</filename>
+	</files>
+	<languages>
+		<language tag="fr-FR">language/fr-FR/plg_system_cgsecurers.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_system_cgsecurers.sys.ini</language>
+		<language tag="en-GB">language/en-GB/plg_system_cgsecurers.ini</language>
+		<language tag="en-GB">language/en-GB/plg_system_cgsecurers.sys.ini</language>
+	</languages>
+	<config>
+        <fields name="params">
+            <fieldset name="basic" addfieldprefix="Conseilgouz\Plugin\System\Cgsecurers\Field">
+				<field name="version" type="version"  margintop="-3em"  extension="cgsecurers" />
+				<field name="note" type="note"  label="CGSECURE_NOTE" description="CGSECURE_NOTE_DESC" />
+			</fieldset>
+		</fields>
+	</config>	
+    <updateservers>
+       <server type="extension" priority="1" name="CG_RSFORM">https://raw.githubusercontent.com/conseilgouz/updates_github/master/plg_system_cgsecurers_update.xml</server>
+    </updateservers>
+	
+</extension>
