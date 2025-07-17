@@ -1,7 +1,6 @@
 <?php
 /**
  * @component     Plugin Rsform CG Secure
- * Version			: 2.0.0
  * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  * @copyright (c) 2025 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz
@@ -13,7 +12,7 @@ namespace Conseilgouz\Plugin\System\Cgsecurers\Extension;
 defined('_JEXEC') or die();
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
-use ConseilGouz\CGSecure\Helper\Cgipcheck;
+use ConseilGouz\CGSecure\Cgipcheck;
 
 class Cgsecurers extends CMSPlugin implements SubscriberInterface
 {

@@ -20,6 +20,7 @@ class plgsystemcgsecurersInstallerScript
 {
 	private $min_joomla_version      = '4.0.0';
 	private $min_php_version         = '7.4';
+    private $min_secure_version      = '3.5.0';
 	private $name                    = 'Plugin System CG Secure RS';
 	private $exttype                 = 'plugin';
 	private $extname                 = 'cgsecurers';
@@ -30,7 +31,7 @@ class plgsystemcgsecurersInstallerScript
 	public function __construct()
 	{
 		$this->dir = __DIR__;
-		$this->lang = Factory::getLanguage();
+		$this->lang = Factory::getApplication()->getLanguage();
 		$this->lang->load($this->extname);
 	}
 
@@ -47,6 +48,10 @@ class plgsystemcgsecurersInstallerScript
 			$this->uninstallInstaller();
 			return false;
 		}
+        if (! $this->passMinimumSecureVersion()) {
+            $this->uninstallInstaller();
+            return false;
+        }
 		// To prevent installer from running twice if installing multiple extensions
 		if ( ! file_exists($this->dir . '/' . $this->installerName . '.xml'))
 		{
@@ -135,6 +140,31 @@ class plgsystemcgsecurersInstallerScript
 
 		return true;
 	}
+    // Check if CG Secure version passes minimum requirement
+    private function passMinimumSecureVersion()
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        $query->select('manifest_cache');
+        $query->from($db->quoteName('#__extensions'));
+        $query->where('name = "CGSecure Library"');
+        $db->setQuery($query);
+        $res = $db->loadResult();
+        if (!$res) {
+            echo "You need install CG Secure";
+            return false;
+        }
+        $manifest = json_decode($res, true);
+        if ($manifest['version'] < $this->min_secure_version) {
+            Factory::getApplication()->enqueueMessage(
+                'Incompatible CG Secure version : found  <strong>' . $manifest['version'] . '</strong>, Minimum <strong>' . $this->min_secure_version . '</strong>',
+                'error'
+            );
+            return false;
+        }
+        return true;
+    }
+    
 	private function uninstallInstaller()
 	{
 		if ( ! is_dir(JPATH_PLUGINS . '/system/' . $this->installerName)) {
